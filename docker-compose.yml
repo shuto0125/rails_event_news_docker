@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    environment:
+      - BINDING=0.0.0.0
+      - LANG=C.UTF-8
+      - EDITOR=vim
+    ports:
+      - "${EXTERNAL_RAILS_PORT:-3000}:3000"
+    tty: true
+    volumes:
+      - .:/app:cached
+      - bundle:/usr/local/bundle
+      # - "${APP_SSH_DIRECTORY}:/root/.ssh"
+  db:
+    image: postgres:11.2
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    tty: true
+    ports:
+      - "${EXTERNAL_POSTGRES_PORT:-5432}:5432"
+  # TODO: ローカルの SQS を elasticmq へ
+  # sqs:
+  #   image: softwaremill/elasticmq
+  #   ports:
+  #     - "${EXTERNAL_SQS_PORT:-9324}:9324"
+
+volumes:
+  postgres_data:
+  bundle:
