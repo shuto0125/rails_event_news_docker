@@ -2,11 +2,24 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title App
+    %title EventNews2
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    = yield
+    %header.navbar.navbar-expand-sm.navbar-light.bg-light
+      .container
+        = link_to("EventNews2", root_path, clas: "navbar-brand")
+        %ul.navbar-nav
+          %li.nav-item
+            - if logged_in?
+              = link_to("ログアウト", logout_path, class: "nav-link", method: :delete)
+            - else
+              = link_to("GitHubでログイン", "/auth/github", class: "nav-link", method: :post)
+    .container
+      - if flash.notice
+        .alert.alert-success
+          = flash.notice
+      = yield
