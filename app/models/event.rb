@@ -1,9 +1,9 @@
 class Event < ApplicationRecord
-  validate :name, length: { maximum: 50 }, presence: true
-  validate :place, length: { maximum: 100 }, presence: true
-  validate :content, length: { maximum: 50 }, presence: true
-  validate :start_at, presence: true
-  validate :end_at, presence: true
+  validates :name, length: { maximum: 50 }, presence: true
+  validates :place, length: { maximum: 100 }, presence: true
+  validates :content, length: { maximum: 50 }, presence: true
+  validates :start_at, presence: true
+  validates :end_at, presence: true
   validate :start_at_should_be_before_end_at
 
   private
