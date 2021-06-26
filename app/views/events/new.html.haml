@@ -13,11 +13,11 @@
   .form-group
     = f.label :start_at
     %div
-      = f.datetime_select :start_at, start_year: now.year, end_year: now.year + 1
+      = f.datetime_select( :start_at, start_year: now.year, end_year: now.year + 1, default: now + 400000)
   .form-group
     = f.label :end_at
     %div
-      = f.datetime_select :end_at, start_year: now.year, end_year: now.year + 1
+      = f.datetime_select( :end_at, start_year: now.year, end_year: now.year + 1, default: now + 500000)
   .form-group
     = f.label :content
     = f.text_area :content, class: "form-control", row: 10
