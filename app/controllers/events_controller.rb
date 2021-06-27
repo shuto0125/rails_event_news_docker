@@ -6,6 +6,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @ticket = current_user && current_user.tickets.find_by(event: @event)
     @tickets = @event.tickets.includes(:user).order(:created_at)
+    @posts = @event.posts.includes(:user).order(:created_at)
   end
 
   def new

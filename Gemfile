@@ -63,3 +63,5 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 
 gem 'rails-i18n', '~> 6.0.0'
+
+gem 'pry-rails'

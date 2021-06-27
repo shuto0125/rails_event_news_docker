@@ -1,4 +1,4 @@
-class TicketsController < ApplicationController
+class Events::TicketsController < ApplicationController
   def new
     raise ActionController::RoutingError, "ログイン状態で TicketsController#new にアクセス"
   end

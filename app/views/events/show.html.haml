@@ -13,7 +13,7 @@
       %h5.card-header 開催場所
       .card-body
         %p.card-text= @event.place
-    .card.mb-2
+    .card.mb-4
       %h5.card-header 主催者
       .card-body
         - if @event.owner
@@ -22,10 +22,33 @@
             = "@#{@event.owner.name}"
         - else
           退会したユーザーです
+    .card.mb-2
+      %h5.card-header イベントのポスト
+      .card-body
+        = link_to('ポストを投稿する', new_event_post_path(@event), class: "btn btn-primary mb-2")
+        - @posts.each do |post|
+          .card.mb-2
+            .card-body.pb-2.mb-2.border.border-top-0.border-left-0.border-right-0
+              %h5.card-title.d-flex.justify-content-between= "#{post.title} #{link_to('削除', event_post_path(post.event_id, post.id), class: "btn btn-danger", method: "delete", :data => { confirm: "本当に削除しますか？" })}"
+              .card-text.pb-2= post.content
+              %p.d-flex.justify-content-between
+                %span
+                  = image_tag( post.user.image_url, width: 20, html: 20 )
+                  = post.user.name
+                %span= l(post.created_at, :format => :long)
+            .card-body
+              .btn.btn-info コメントする
+
   .col-4
     - if @event.created_by?(current_user)
-      = link_to( "イベントを編集する", edit_event_path(@event), class: "btn btn-info btn-lg btn-block")
-      = link_to( "イベントを削除する", event_path(@event), :class => "btn btn-danger btn-lg btn-block", :method => :delete, :data => { confirm: "本当に削除しますか？" })
+      = link_to( "イベントを編集する",
+                 edit_event_path(@event),
+                 class: "btn btn-info btn-lg btn-block")
+      = link_to( "イベントを削除する",
+                 event_path(@event),
+                 :class => "btn btn-danger btn-lg btn-block",
+                 :method => :delete,
+                 :data => { confirm: "本当に削除しますか？" })
     - if @ticket
       = link_to("参加をキャンセルする", event_ticket_path( @event, @ticket ), :method => :delete, class: "btn btn-warning btn-lg btn-block")
     - elsif logged_in?
@@ -37,7 +60,7 @@
             .modal-header
               %h4.modal-title#dialogHeader 参加者コメント
               %button.close{ type: "button", "data-dismiss": "modal" } &times;
-            = form_with(model: @event.tickets.build, url: event_tickets_path(@event)) do |f|
+            = form_with( model: @event.tickets.build, url: event_tickets_path(@event)) do |f|
               .modal-body
                 #createTicketErrors
                 =  f.text_field( :comment, class: "form-control" )

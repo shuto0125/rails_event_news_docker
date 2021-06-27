@@ -5,9 +5,12 @@ Rails.application.routes.draw do
   delete "/logout" => "session#destroy"
 
   resource :retirements
-
+  
   resources :events do
-    resources :tickets
+    scope module: :events do
+      resources :tickets
+      resources :posts
+    end
   end
 
 end

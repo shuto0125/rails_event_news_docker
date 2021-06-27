@@ -1,0 +1,17 @@
+- now = Time.zone.now
+
+%h1.mt-2 ポスト投稿
+
+%h2.mt-2= "イベント名: #{@event_name}"
+
+= form_with(url: event_posts_path,
+            class: "from-horizontal",
+            ) do |f|
+  #errors
+  .form-group
+    = f.label( :title )
+    = f.text_field( :title, class: "form-control" )
+  .form-group
+    = f.label( :content )
+    = f.text_area( :content, class: "form-control" )
+  = f.submit( class: "btn btn-primary" )
